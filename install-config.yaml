@@ -1,24 +1,32 @@
+additionalTrustBundlePolicy: Always
 apiVersion: v1
-baseDomain: kdinesh.in       ## update baseDomain with your domain name        
+baseDomain: vclass.in       ## update baseDomain with your domain name        
 compute: 
-- hyperthreading: Enabled 
+  architecture: amd64
   name: worker
+  platform: {}
   replicas: 0 
 controlPlane: 
-  hyperthreading: Enabled 
+  architecture: amd64
   name: master
+  platform: {}
   replicas: 3               ## if you want deploy more master nodes you change replica value 
 metadata:
   name: ocp4                ## update with cluster name 
 networking:
   clusterNetwork:
-  - cidr: 10.128.0.0/14     ## check if any confilict with your env ,if required change IP cidr 
-    hostPrefix: 23 
-  networkType: OpenShiftSDN
+  - cidr: 10.128.0.0/14     ## check if any conflict with your env ,if required change IP cidr 
+    hostPrefix: 23     ##hostPrefix in the OpenShift install-config defines the subnet size for each node
+  networkType: OVNKubernetes
   serviceNetwork: 
   - 172.30.0.0/16            ## check if any confilict with your env ,if required change IP cidr 
 platform:
   none: {} 
 fips: false 
+## means your OpenShift won't follow strict FIPS security standards for encryption and data handling. This allows for more flexibility and faster performance, but isn't compliant with regulations requiring FIPS use.
 pullSecret: '{"auths": ...}'    ## Paste downladed pull secret 
 sshKey: 'ssh-ed25519 AAAA...'   ## Paste ssh key
+imageContentSources: 
+## add output you get from mirroring successfully.
+additionalTrustBundle: 
+##add rootCA.pem of mirror registry node. Each line should have 2 spaces.
