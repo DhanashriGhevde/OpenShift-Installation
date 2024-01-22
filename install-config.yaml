@@ -30,3 +30,4 @@ imageContentSources:
 ## add output you get from mirroring successfully.
 additionalTrustBundle: 
 ##add rootCA.pem of mirror registry node. Each line should have 2 spaces.
+
